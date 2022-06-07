@@ -1,0 +1,228 @@
+html{
+	scroll-behavior: smooth;
+  }
+
+body
+{
+	background-color:#AAABB8;
+	margin: 0;
+	box-sizing: border-box;
+	color: white;
+	font-size: 20px;
+	font-family: verdana;
+	box-sizing: border-box;
+	overflow-x: hidden;
+}
+
+header
+{ 
+	display: flex;
+	justify-content: space-between;
+	background-color:#29648A;
+	padding: 30px;
+	width:auto;
+	margin-left:auto;
+	margin-right:auto;
+	font-size: 30px;
+}
+
+nav
+{
+	background-color:#464866;
+	width: 100%;
+	border-top: 2px dashed #2E1114;
+	border-bottom: 2px dashed #2E1114;
+	padding: 10px 0;
+	text-align: center;
+}
+
+ol
+{
+	padding:0;
+	margin:0;
+	list-style-type: none;
+	font-size: 18px;
+	height: 35px;
+	line-height: 200%;
+}	 
+
+a 
+{
+	color: white;
+	text-decoration: none;
+}
+ol a
+{
+	color: white;
+	text-decoration: none;
+	display: block;
+}
+
+ol > li
+{
+	float: left;
+	width: 24%;
+	height: 40px;
+	border-right: 2px dashed #464866;
+}
+
+ol > li:hover
+{
+	background-color:#29648A;
+}
+
+ol > li > ul
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	height: 40px;
+	display: none;
+}
+
+ol > li:hover > ul
+{
+	display: block;
+}
+
+ol > li > ul > li
+{
+	background-color:#464866;
+	position:relative;
+	z-index: 100;
+	border-top: 2px dashed #501B1D;
+}
+
+ol > li > ul > li:hover
+{
+	background-color: #29648A;
+}
+
+h1, h2
+{
+	margin-right: 10%;
+}
+
+#container
+{
+	background-color:#2E9CCA;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: stretch;
+}
+
+
+.tile
+{
+	background-color:#29648A;
+	margin: auto;
+	border: 1px solid #464866;
+	border-radius: 10px;
+}
+
+.content
+{
+	margin: 3%;
+	display: flex;
+	flex-flow: column;
+	row-gap: 30px;
+}
+
+footer
+{
+	background-color:#464866;
+	padding: 20px;
+	width:auto;
+	margin: auto;
+}
+
+.sticky
+{
+	width: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 5;
+}
+
+@media (max-width: 1020px)
+{
+	img 
+	{
+		width: 60%;
+		margin: auto;
+	}
+	
+	.tile
+	{
+	width: 90%;
+	display: flex;
+	flex-flow: column;
+	justify-content: space-evenly;
+	row-gap: 20px;
+	}
+	
+	
+	#container
+	{
+		width: 100%;
+	}
+}
+@media (min-width: 1021px)
+{
+	#container
+	{
+		width: 90%;
+		border : 2px solid #666666;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	img
+	{
+		max-width: 400px;
+		max-height: 400px;
+		object-fit: cover;
+		margin:auto;
+		padding: 10px;
+		border: 1px solid;
+		border-radius: 10px;
+	}
+	
+	#logo
+	{
+		width: 30%;
+		height: 30%;
+		border: 0px;
+		margin-right:20px;
+	}
+	
+	.tile
+	{
+	margin-top: 30px;
+	width: 450px;
+	height: 800px;
+	display: flex;
+	flex-flow: column;
+	justify-content: space-evenly;
+	}
+}
+
+
+input
+{
+	padding: 5px;
+	margin: 5px;
+	margin-bottom:30px;
+}
+
+button
+{
+	width: 150px;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5px;
+	background-color:#464866;
+	color: #AAABB8;
+}
