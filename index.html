@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html lang="eng">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Space News</title>
+	<meta name="description" content="Site containing news about space from around the world"/>
+	<meta name="keywords" content="News, space, spaceship"/>
+	<link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="wrapper">
+<header id="header">
+		<h1>Space News</h1>
+		<img  src="images/logo.png" id='logo' alt="logo"/>
+</header>
+<nav class="nav">
+	<ol>
+		<li><a href="index.html">Main Page</a></li>
+		<li><a href="library.html">Library</a>
+		<li> 
+			Load articles
+			<input type="number" id="articlesToLoad" min="1" max="50" value = "15">
+		 </li>
+		<li id = 'display'> </li>
+	</ol>
+</nav>
+
+<div id="container">
+</div>
+<footer>Adam Niesiobędzki</footer>
+
+
+<script src="scripts.js"> </script>
+<script>
+
+	let articlesLoaded = 0;
+	let articlesToLoad = 15;
+	const display = document.getElementById('display');
+	const articlesToLoadInput = document.getElementById('articlesToLoad');
+	articlesToLoadInput.addEventListener('input', updateValue);
+
+	function updateValue(e)
+	{
+    	articlesToLoad = parseInt(e.target.value);
+	}
+
+function toggleFavourite(e)
+{
+    console.log(e.target.value);
+    let savedIDs = JSON.parse(localStorage.getItem("favouriteArticles"));
+    let elementFound = false; 
+    if (savedIDs === null)
+    {
+        savedIDs = [e.target.value];
+        myLocalStorage.setItem("favouriteArticles", JSON.stringify(savedIDs));
+        e.target.textContent = "delete from favourite";
+    }
+    else
+    {
+        for (let i = 0; i < savedIDs.length; i++)
+        {
+            if(savedIDs[i] == e.target.value)
+            {
+                savedIDs.splice(i, 1);
+                elementFound = true;
+                myLocalStorage.setItem("favouriteArticles", JSON.stringify(savedIDs));
+                e.target.textContent = "add to favourite";
+                break;
+            }
+        }
+        if (elementFound === false)
+        {
+            savedIDs.push(e.target.value);
+            myLocalStorage.setItem("favouriteArticles", JSON.stringify(savedIDs));
+            e.target.textContent = "delete from favourite";
+        }
+    }
+}
+
+	const fetchArticles = () =>
+	{
+    	fetch('https://api.spaceflightnewsapi.net/v3/articles?_limit=' + articlesToLoad + '&_start=' + articlesLoaded)
+    	.then((res) => res.json())
+    	.then((data) => 
+    	{
+        	console.log(data[0]);
+        	data.map(item => renderTile(item))
+    	})
+    	articlesLoaded += articlesToLoad;
+    	display.innerHTML = "Articles shown:" + articlesLoaded;
+	}
+
+
+	window.onload = fetchArticles();	
+</script>
+</body>
+</html>

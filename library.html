@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="eng">
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Space News</title>
+	<meta name="description" content="Site containing news about space from around the world"/>
+	<meta name="keywords" content="News, space, spaceship"/>
+	<link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
+
+
+<body>
+<div id="wrapper">
+<header id="header">
+		<h1>Space News</h1>
+		<img  src="images/logo.png" id='logo' alt="logo"/>
+</header>
+<nav class="nav">
+	<ol>
+		<li><a href="index.html">Main Page</a></li>
+		<li><a href="library.html">Library</a>
+        <li> Sort by date 
+            <ul>
+				<li onclick='sortArticles("mostRecent")'> Most recent first </li>
+				<li onclick='sortArticles("oldest")'> Oldest first </li>
+			</ul></li> 
+        <li> Sort by title 
+            <ul>
+                <li  onclick='sortArticles("A")'> A - Z </li>
+                <li  onclick='sortArticles("Z")'> Z - A </li>
+            </ul></li>
+	</ol>
+</nav>
+
+<div id="container">
+</div>
+<footer>Adam Niesiobędzki</footer>
+
+
+<script src="scripts.js"> </script>
+<script>
+
+    let articlesLibrary;
+
+    function compare( a, b ) 
+    {
+        if ( a.title < b.title )
+        {
+            return -1;
+        }
+        if ( a.title > b.title )
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    function removeAllChildNodes(parent) 
+    {
+        while (parent.firstChild) 
+        {
+            parent.removeChild(parent.firstChild);
+        }
+    }
+
+function toggleFavourite(e)
+{
+    console.log(e.target.value);
+    let savedIDs = JSON.parse(localStorage.getItem("favouriteArticles"));
+    for (let i = 0; i < savedIDs.length; i++)
+    {
+        if(savedIDs[i] == e.target.value)
+        {
+            savedIDs.splice(i, 1);
+            elementFound = true;
+            myLocalStorage.setItem("favouriteArticles", JSON.stringify(savedIDs));
+            const tile = e.target.parentNode;
+            tile.remove();
+            break;
+        }
+    }
+}
+
+
+    async function fetchFavouriteArticle(id)
+    {
+        try {
+            const response = await fetch('https://api.spaceflightnewsapi.net/v3/articles/' + id, 
+            {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const article = await response.json();
+            return article;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+async function sortArticles(type)
+{
+    removeAllChildNodes(container);
+    articlesLibrary = [];
+    let savedIDs = JSON.parse(localStorage.getItem("favouriteArticles"));
+    if (savedIDs === null || savedIDs.length == 0)
+    {
+        const text = document.createElement('h1');
+        const message = document.createTextNode("No articles to show");
+        text.appendChild(message);
+        container.appendChild(text);
+        return;
+    }
+    else
+    {
+        savedIDs.sort();
+        for (let i = 0; i < savedIDs.length; i++)
+        {
+            articlesLibrary[i] = await fetchFavouriteArticle(savedIDs[i]);
+        }
+    }
+    if (type === 'mostRecent')
+    {
+        articlesLibrary.reverse();
+    }
+    else if (type === 'oldest'){} //its already sorted this way so no sorting needed
+    else if (type === 'A')
+    {
+        articlesLibrary.sort(compare);
+    }
+    else if (type === 'Z')
+    {
+        articlesLibrary.sort(compare);
+        articlesLibrary.reverse();
+    }
+    articlesLibrary.forEach(renderTile);
+}
+	window.onload = sortArticles('mostRecent');
+
+</script>
+</body>
+</html>
