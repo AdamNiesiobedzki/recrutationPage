@@ -82,22 +82,6 @@ function toggleFavourite(e)
     }
 }
 
-
-    async function fetchFavouriteArticle(id)
-    {
-        try {
-            const response = await fetch('https://api.spaceflightnewsapi.net/v3/articles/' + id, 
-            {
-                method: 'GET',
-                credentials: 'same-origin'
-            });
-            const article = await response.json();
-            return article;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
 function sortArticles(type)
 {
     removeAllChildNodes(container);
