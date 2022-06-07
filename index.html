@@ -58,7 +58,6 @@ window.addEventListener('scroll',()=>
 
 function toggleFavourite(e)
 {
-    console.log(e.target.value);
     let savedIDs = JSON.parse(localStorage.getItem("favouriteArticles"));
     let elementFound = false; 
     if (savedIDs === null)
